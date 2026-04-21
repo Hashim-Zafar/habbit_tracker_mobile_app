@@ -1,0 +1,12 @@
+# env
+.env
+.env.*
+
+# logs
+*.log
+
+# OS
+.DS_Store
+
+# deps (safety fallback)
+node_modules
