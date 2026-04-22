@@ -1,0 +1,36 @@
+{
+  "name": "my-worker",
+  "main": "./index.ts",
+  "compatibility_date": "2026-04-21",
+  "vars": {
+    "ENVIRONMENT": "dev",
+  },
+  "d1_databases": [
+    {
+      "binding": "habit_tracker_db",
+      "database_name": "habit_tracker_local_db",
+      "database_id": "1234",
+    },
+  ],
+  "env": {
+    "staging": {
+      "name": "my-worker-staging",
+      "vars": {
+        "ENVIRONMENT": "staging",
+      },
+      "d1_databases": [
+        {
+          "binding": "habit_tracker_db",
+          "database_name": "habit_tracker_staging_db",
+          "database_id": "8b1a148a-01e9-4f8d-9c40-82314ee761a5",
+        },
+      ],
+    },
+    "production": {
+      "name": "my-worker-production",
+      "vars": {
+        "ENVIRONMENT": "production",
+      },
+    },
+  },
+}
