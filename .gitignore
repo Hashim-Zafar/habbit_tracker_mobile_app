@@ -10,3 +10,4 @@
 
 # deps (safety fallback)
 node_modules
+.dev.vars

@@ -4,6 +4,8 @@
   "type": "module",
   "private": true,
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260423.1",
+    "@types/bcryptjs": "^3.0.0",
     "@types/bun": "latest",
     "drizzle-kit": "^0.31.10"
   },
@@ -11,8 +13,12 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.7.6",
+    "bcryptjs": "^3.0.3",
     "drizzle-orm": "^0.45.2",
-    "hono": "^4.12.14"
+    "hono": "^4.12.14",
+    "jose": "^6.2.2",
+    "zod": "^4.3.6"
   },
   "scripts": {
     "dev": "wrangler dev",
