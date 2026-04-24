@@ -19,3 +19,7 @@ export const loginValidator = z.object({
     .min(8, "password must be at least 8 characters")
     .max(30, "password must be at most 30 characters"),
 });
+
+export const refreshtokenValidator = z.object({
+  refreshToken: z.string().min(1, "Refresh token is required"),
+});

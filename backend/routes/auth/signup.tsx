@@ -3,7 +3,7 @@ import type { AppEnv } from "../../lib/types";
 import { registerValidator } from "../../routes_Validators/auth";
 import { zValidator } from "@hono/zod-validator";
 import { validationError } from "../../lib/validationError";
-import { createAuth, hashPassword } from "../../lib/auth";
+import { createAuth, hashPassword, hashRefreshToken } from "../../lib/auth";
 import { users } from "../../database";
 import { eq } from "drizzle-orm";
 
@@ -39,7 +39,7 @@ registerRoute.post(
     // 4. Generate refresh token using the userId we just created
 
     const refreshToken = await auth.generateRefreshToken(userId);
-    const refresh_token_hash = await hashPassword(refreshToken);
+    const refresh_token_hash = await hashRefreshToken(refreshToken);
 
     const now = new Date();
 
