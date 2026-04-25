@@ -10,5 +10,6 @@ export type AppEnv = {
   };
   Variables: {
     db: DrizzleD1Database<typeof schema>;
+    userID: string;
   };
 };

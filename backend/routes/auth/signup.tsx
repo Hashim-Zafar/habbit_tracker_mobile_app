@@ -64,7 +64,11 @@ registerRoute.post(
     // 7. Return tokens + safe user data (never return password_hash)
     return c.json(
       {
-        user: { id: newUser.id, email: newUser.email, name: newUser.name },
+        user: {
+          id: newUser.id,
+          email: newUser.email,
+          name: newUser.name,
+        },
         accessToken,
         refreshToken,
       },

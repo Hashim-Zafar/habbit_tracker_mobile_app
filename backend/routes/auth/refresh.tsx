@@ -50,17 +50,20 @@ refreshRoute.post(
     if (!isVerified) {
       return c.json({ error: "Refresh tokens do not match" }, 401);
     }
-    // 6. generate new access and refresh tokens
+    // 6. update the time at which the token is updated
+    const now = new Date();
+
+    // 7. generate new access and refresh tokens
     const newAccessToken = await auth.generateAccessToken(userId);
     const newRefreshToken = await auth.generateRefreshToken(userId);
-    // 7. Hash the new refresh token and store it in the db
+    // 8. Hash the new refresh token and store it in the db
     const newRefreshTokenHash = await hashRefreshToken(newRefreshToken);
     await db
       .update(users)
-      .set({ refreshTokenHash: newRefreshTokenHash })
+      .set({ refreshTokenHash: newRefreshTokenHash, updatedAt: now })
       .where(eq(users.id, userId))
       .run();
-    // 8. return the new tokens
+    // 9. return the new tokens
     return c.json({
       accessToken: newAccessToken,
       refreshToken: newRefreshToken,

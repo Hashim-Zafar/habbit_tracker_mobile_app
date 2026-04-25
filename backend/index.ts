@@ -1,20 +1,22 @@
 import { Hono } from "hono";
-import { drizzle } from "drizzle-orm/d1";
-import * as schema from "./database/index";
+
 import type { AppEnv } from "./lib/types";
 import { registerRoute } from "./routes/auth/signup";
 import { loginRoute } from "./routes/auth/login";
 import { refreshRoute } from "./routes/auth/refresh";
 import { logoutRoute } from "./routes/auth/logout";
+import { dbMiddleware } from "./middlewares/db";
+import { requirauthMiddleware } from "./middlewares/requireAuth";
+import { addhabbitRoute } from "./routes/habits(ADD,DEL,EDIT)/addHabit";
+import { edithabbitRoute } from "./routes/habits(ADD,DEL,EDIT)/editHabit";
+import { deletehabbitRoute } from "./routes/habits(ADD,DEL,EDIT)/deleteHabit";
 const app = new Hono<AppEnv>();
 
-// DB middleware — runs before every request
-app.use("*", async (c, next) => {
-  const db = drizzle(c.env.habit_tracker_db, { schema });
-  c.set("db", db);
-  await next();
-});
-
+//db middleware runs before every request to establish a connection with the db
+app.use("*", dbMiddleware);
+app.use("/addHabit", requirauthMiddleware);
+app.use("/deleteHabit", requirauthMiddleware);
+app.use("/editHabit", requirauthMiddleware);
 app.get("/", (c) => c.text("Hello!"));
 
 // Mount your routes
@@ -22,5 +24,8 @@ app.route("/auth", registerRoute);
 app.route("/auth", loginRoute);
 app.route("/auth", refreshRoute);
 app.route("/auth", logoutRoute);
+app.route("/", addhabbitRoute);
+app.route("/", deletehabbitRoute);
+app.route("/", edithabbitRoute);
 
 export default app;
