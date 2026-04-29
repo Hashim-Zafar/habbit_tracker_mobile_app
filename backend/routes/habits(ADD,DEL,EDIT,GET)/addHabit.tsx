@@ -5,6 +5,7 @@ import { addHabitValidator } from "../../routes_Validators/Habits";
 import type { AppEnv } from "../../lib/types";
 import { habits } from "../../database";
 import { eq, and } from "drizzle-orm";
+import { delCachedHabits } from "../../lib/habitsCache";
 export const addhabbitRoute = new Hono<AppEnv>();
 
 addhabbitRoute.post(
@@ -45,7 +46,9 @@ addhabbitRoute.post(
       })
       .returning()
       .get();
-    // 5. return the added habbit
+    // 5. delete the cache
+    await delCachedHabits(c.env, userId);
+    // 6. return the added habbit
     return c.json({ habit: newHabbit }, 201);
   },
 );

@@ -7,6 +7,8 @@ export type AppEnv = {
     ENVIRONMENT: string;
     JWT_SECRET: string;
     REFRESH_SECRET: string;
+    UPSTASH_REDIS_REST_URL: string;
+    UPSTASH_REDIS_REST_TOKEN: string;
   };
   Variables: {
     db: DrizzleD1Database<typeof schema>;

@@ -5,6 +5,7 @@ import { validationError } from "../../lib/validationError";
 import { deleteHabitValidator } from "../../routes_Validators/Habits";
 import { habits } from "../../database";
 import { eq, and } from "drizzle-orm";
+import { delCachedHabits } from "../../lib/habitsCache";
 export const deletehabbitRoute = new Hono<AppEnv>();
 
 deletehabbitRoute.delete(
@@ -27,7 +28,10 @@ deletehabbitRoute.delete(
         404,
       );
     }
-    // 4. other wise return succesful response
+    //4. delete the cache
+    await delCachedHabits(c.env, userID);
+
+    // 5. other wise return succesful response
     return c.json(
       { message: "The habit is found and deleted successfully" },
       200,
